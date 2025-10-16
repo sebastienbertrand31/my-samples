@@ -1,36 +1,41 @@
-const fs = require('fs');
-const path = require('path');
-const readline = require('readline');
+const fs = require("fs");
+const path = require("path");
 
-// Dossier racine à scanner
-const rootFolder = __dirname;
+// dossier à scanner
+const rootDirs = ["LM", "SC"];
+const baseURL = "https://raw.githubusercontent.com/sebastienbertrand31/my-samples/main/";
 
-// Fonction récursive pour récupérer tous les fichiers .wav
-function getAllWavFiles(dir) {
+// objet final
+const jsonOutput = { "_base": baseURL };
+
+// fonction pour scanner un dossier récursivement
+function walk(dir) {
   let results = [];
   const list = fs.readdirSync(dir);
-
   list.forEach(file => {
     const filePath = path.join(dir, file);
     const stat = fs.statSync(filePath);
-
-    if (stat.isDirectory()) {
-      results = results.concat(getAllWavFiles(filePath)); // récursion
-    } else if (file.toLowerCase().endsWith('.wav')) {
+    if (stat && stat.isDirectory()) {
+      results = results.concat(walk(filePath));
+    } else if (file.endsWith(".wav")) {
       results.push(filePath);
     }
   });
-
   return results;
 }
 
-// Génération du JSON
-const wavFiles = getAllWavFiles(rootFolder);
-const jsonOutput = JSON.stringify(wavFiles, null, 2);
-const outputPath = path.join(rootFolder, 'strudel.json');
-fs.writeFileSync(outputPath, jsonOutput);
-console.log(`JSON généré avec succès ! ${wavFiles.length} fichiers trouvés.`);
-console.log(`Chemin du JSON : ${outputPath}`);
+// parcourir tous les dossiers racine
+rootDirs.forEach(root => {
+  const files = walk(root);
+  files.forEach(f => {
+    // créer une clé sample = nom du fichier sans extension
+    const key = path.basename(f, path.extname(f));
+    // créer chemin relatif depuis la racine du repo
+    const relativePath = f.replace(/\\/g, "/"); // pour Windows si besoin
+    jsonOutput[key] = relativePath;
+  });
+});
 
-// Interface pour chercher un sample
-cons
+// écrire le fichier JSON
+fs.writeFileSync("strudel.json", JSON.stringify(jsonOutput, null, 2));
+console.log("JSON généré avec _base et tous les samples !");
