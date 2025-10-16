@@ -1,4 +1,5 @@
 {
+  "_base": "https://raw.githubusercontent.com/sebastienbertrand31/my-samples/main/",
   "0": "SC/tablex/0.wav",
   "1": "SC/tablex/1.wav",
   "2": "SC/realclaps/2.wav",
@@ -19,7 +20,6 @@
   "18": "SC/num/18.wav",
   "19": "SC/num/19.wav",
   "20": "SC/num/20.wav",
-  "_base": "https://raw.githubusercontent.com/sebastienbertrand31/my-samples/main/",
   "000_ab2closedhh": "SC/ab/000_ab2closedhh.wav",
   "001_ab2crash": "SC/ab/001_ab2crash.wav",
   "002_ab2hit1": "SC/ab/002_ab2hit1.wav",
