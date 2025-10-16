@@ -1,41 +1,50 @@
 const fs = require("fs");
 const path = require("path");
 
-// dossier à scanner
+// Dossier(s) racine à scanner
 const rootDirs = ["SC"];
+
+// URL de base pour GitHub
 const baseURL = "https://raw.githubusercontent.com/sebastienbertrand31/my-samples/main/";
 
-// objet final
+// Objet JSON avec _base en premier
 const jsonOutput = { "_base": baseURL };
 
-// fonction pour scanner un dossier récursivement
+// Fonction récursive pour scanner un dossier
 function walk(dir) {
   let results = [];
   const list = fs.readdirSync(dir);
+
   list.forEach(file => {
     const filePath = path.join(dir, file);
     const stat = fs.statSync(filePath);
+
     if (stat && stat.isDirectory()) {
       results = results.concat(walk(filePath));
     } else if (file.endsWith(".wav")) {
       results.push(filePath);
     }
   });
+
   return results;
 }
 
-// parcourir tous les dossiers racine
+// Parcours des dossiers
 rootDirs.forEach(root => {
   const files = walk(root);
+
   files.forEach(f => {
-    // créer une clé sample = nom du fichier sans extension
+    // Nom du fichier sans extension → clé du JSON
     const key = path.basename(f, path.extname(f));
-    // créer chemin relatif depuis la racine du repo
-    const relativePath = f.replace(/\\/g, "/"); // pour Windows si besoin
+
+    // Chemin relatif depuis la racine du projet (donc SC/...)
+    const relativePath = path.relative(process.cwd(), f).replace(/\\/g, "/");
+
+    // Ajout au JSON
     jsonOutput[key] = relativePath;
   });
 });
 
-// écrire le fichier JSON
+// Écriture du fichier JSON
 fs.writeFileSync("strudel.json", JSON.stringify(jsonOutput, null, 2));
-console.log("JSON généré avec _base et tous les samples !");
+console.log("✅ JSON généré avec _base et chemins relatifs !");
