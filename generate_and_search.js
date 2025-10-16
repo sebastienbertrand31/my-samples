@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 
 // dossier à scanner
-const rootDirs = ["LM", "SC"];
+const rootDirs = ["SC"];
 const baseURL = "https://raw.githubusercontent.com/sebastienbertrand31/my-samples/main/";
 
 // objet final
