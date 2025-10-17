@@ -3321,12 +3321,12 @@
     "SC/sitar/006_d_minor_sitar_chordb.wav",
     "SC/sitar/007_d_minor_sitar_chordc.wav"
   ],
-  "softpiano_C": [
-    "SC/softpiano_C/Epiano.wav",
-    "SC/softpiano_C/SC_GG_100_gayageum_riff_riddim_C.wav",
-    "SC/softpiano_C/piano1.wav",
-    "SC/softpiano_C/pianosoft1.wav",
-    "SC/softpiano_C/pianosoft2.wav"
+  "softpiano": [
+    "SC/softpiano/Epiano.wav",
+    "SC/softpiano/SC_GG_100_gayageum_riff_riddim_C.wav",
+    "SC/softpiano/piano1.wav",
+    "SC/softpiano/pianosoft1.wav",
+    "SC/softpiano/pianosoft2.wav"
   ],
   "space": [
     "SC/space/000_0.wav",
